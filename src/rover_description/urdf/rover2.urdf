@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<robot name="qbotix_4wheel_rover">
+
+  <!-- Materials -->
+  <material name="body_mat">
+    <color rgba="0.25 0.25 0.28 1.0"/>
+  </material>
+  <material name="wheel_mat">
+    <color rgba="0.05 0.05 0.05 1.0"/>
+  </material>
+  <material name="sensor_mat">
+    <color rgba="0.15 0.35 0.75 1.0"/>
+  </material>
+
+  <!--
+    Chassis: 0.65 m long x 0.40 m wide x 0.11 m high
+    Wheels: 0.10 m diameter
+    +X = front, +Y = left, +Z = up
+    Wheelbase: 0.45 m
+    Track width: 0.40 m
+    base_link is at the chassis geometric center.
+  -->
+
+  <link name="base_footprint"/>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="8.0"/>
+      <inertia ixx="0.20" ixy="0" ixz="0"
+               iyy="0.35" iyz="0" izz="0.45"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.65 0.40 0.11"/>
+      </geometry>
+      <material name="body_mat"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.65 0.40 0.11"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Keep base_footprint at ground projection of base_link.
+       The chassis center is 0.10 m above the ground. -->
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.105" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ZED mounting reference: 5 cm above base_link.
+       This is a mounting frame, not the camera's optical frame. -->
+  <link name="zed_camera_link">
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.04 0.04 0.01"/>
+      </geometry>
+      <material name="sensor_mat"/>
+    </visual>
+  </link>
+
+  <joint name="zed_camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="zed_camera_link"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Wheel geometry: radius 0.05 m, width 0.04 m.
+       Wheel centers are at z = -0.055 m relative to base_link.
+       Left/right wheel center spacing = 0.40 m.
+       Front/rear wheel center spacing = 0.45 m. -->
+
+  <!-- FRONT LEFT -->
+  <link name="left_front_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+      <material name="wheel_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="left_front_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_front_wheel_link"/>
+    <origin xyz="0.225 0.20 -0.055" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- REAR LEFT -->
+  <link name="left_rear_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+      <material name="wheel_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="left_rear_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_rear_wheel_link"/>
+    <origin xyz="-0.225 0.20 -0.055" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- FRONT RIGHT -->
+  <link name="right_front_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+      <material name="wheel_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="right_front_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_front_wheel_link"/>
+    <origin xyz="0.225 -0.20 -0.055" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- REAR RIGHT -->
+  <link name="right_rear_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+      <material name="wheel_mat"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.57079632679 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.04"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="right_rear_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_rear_wheel_link"/>
+    <origin xyz="-0.225 -0.20 -0.055" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+</robot>

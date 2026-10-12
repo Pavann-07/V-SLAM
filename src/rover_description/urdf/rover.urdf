@@ -3,7 +3,7 @@
 <robot name="qbotix_rover">
 
   <!--
-    QBotix 6-wheel Rocker-Bogie Rover
+    QBotix 4-wheel Rover
 
     Coordinate convention:
       +X = FRONT
@@ -11,10 +11,10 @@
       +Z = UP
 
     Dimensions:
-      Overall wheel-to-wheel length: 1.30 m
+      Wheelbase: 0.50 m
       Wheel diameter: 0.30 m
       Wheel radius: 0.15 m
-      Wheel center spacing: 0.50 m
+      Wheel track: 0.60 m
       Main chassis: 0.60 x 0.60 x 0.25 m
 
     Navigation TF:
@@ -92,560 +92,95 @@
 
 
   <!-- ====================================================== -->
-  <!-- LEFT ROCKER                                              -->
+  <!-- FOUR-WHEEL CHASSIS                                     -->
   <!-- ====================================================== -->
 
-  <joint name="left_rocker_joint" type="revolute">
-
+  <!-- Front-left wheel -->
+  <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
-    <child link="left_rocker_link"/>
-
-    <origin
-      xyz="0 0.30 0.30"
-      rpy="0 0 0"/>
-
-    <axis xyz="0 1 0"/>
-
-    <limit
-      lower="-0.785"
-      upper="0.785"
-      effort="1000"
-      velocity="1.0"/>
-
-    <dynamics
-      damping="5.0"
-      friction="1.0"/>
-
-  </joint>
-
-
-  <link name="left_rocker_link">
-
-    <visual>
-
-      <origin xyz="0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-      <material name="arm_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <origin xyz="0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-    </collision>
-
-  </link>
-
-
-  <!-- LEFT FRONT WHEEL -->
-
-  <joint name="left_front_wheel_joint" type="continuous">
-
-    <parent link="left_rocker_link"/>
-    <child link="left_front_wheel_link"/>
-
-    <origin
-      xyz="0.50 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
+    <child link="front_left_wheel_link"/>
+    <origin xyz="0.25 0.30 0.15" rpy="1.57079632679 0 0"/>
     <axis xyz="0 0 1"/>
-
   </joint>
 
-
-  <link name="left_front_wheel_link">
-
+  <link name="front_left_wheel_link">
     <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
       <material name="wheel_mat"/>
-
     </visual>
-
     <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
     </collision>
-
     <inertial>
-
       <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
     </inertial>
-
   </link>
 
-
-  <!-- LEFT BOGIE -->
-
-  <joint name="left_bogie_joint" type="revolute">
-
-    <parent link="left_rocker_link"/>
-    <child link="left_bogie_link"/>
-
-    <origin
-      xyz="-0.25 0 0"
-      rpy="0 0 0"/>
-
-    <axis xyz="0 1 0"/>
-
-    <limit
-      lower="-0.785"
-      upper="0.785"
-      effort="1000"
-      velocity="1.0"/>
-
-    <dynamics
-      damping="5.0"
-      friction="1.0"/>
-
-  </joint>
-
-
-  <link name="left_bogie_link">
-
-    <visual>
-
-      <origin xyz="-0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-      <material name="arm_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <origin xyz="-0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-    </collision>
-
-  </link>
-
-
-  <!-- LEFT MIDDLE WHEEL -->
-
-  <joint name="left_middle_wheel_joint" type="continuous">
-
-    <parent link="left_bogie_link"/>
-    <child link="left_middle_wheel_link"/>
-
-    <origin
-      xyz="0.25 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
-    <axis xyz="0 0 1"/>
-
-  </joint>
-
-
-  <link name="left_middle_wheel_link">
-
-    <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
-      <material name="wheel_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
-    </collision>
-
-    <inertial>
-
-      <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
-    </inertial>
-
-  </link>
-
-
-  <!-- LEFT REAR WHEEL -->
-
-  <joint name="left_rear_wheel_joint" type="continuous">
-
-    <parent link="left_bogie_link"/>
-    <child link="left_rear_wheel_link"/>
-
-    <origin
-      xyz="-0.25 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
-    <axis xyz="0 0 1"/>
-
-  </joint>
-
-
-  <link name="left_rear_wheel_link">
-
-    <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
-      <material name="wheel_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
-    </collision>
-
-    <inertial>
-
-      <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
-    </inertial>
-
-  </link>
-
-
-  <!-- ====================================================== -->
-  <!-- RIGHT ROCKER                                             -->
-  <!-- ====================================================== -->
-
-  <joint name="right_rocker_joint" type="revolute">
-
+  <!-- Front-right wheel -->
+  <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
-    <child link="right_rocker_link"/>
-
-    <origin
-      xyz="0 -0.30 0.30"
-      rpy="0 0 0"/>
-
-    <axis xyz="0 1 0"/>
-
-    <limit
-      lower="-0.785"
-      upper="0.785"
-      effort="1000"
-      velocity="1.0"/>
-
-    <dynamics
-      damping="5.0"
-      friction="1.0"/>
-
-  </joint>
-
-
-  <link name="right_rocker_link">
-
-    <visual>
-
-      <origin xyz="0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-      <material name="arm_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <origin xyz="0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-    </collision>
-
-  </link>
-
-
-  <!-- RIGHT FRONT WHEEL -->
-
-  <joint name="right_front_wheel_joint" type="continuous">
-
-    <parent link="right_rocker_link"/>
-    <child link="right_front_wheel_link"/>
-
-    <origin
-      xyz="0.50 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
+    <child link="front_right_wheel_link"/>
+    <origin xyz="0.25 -0.30 0.15" rpy="1.57079632679 0 0"/>
     <axis xyz="0 0 1"/>
-
   </joint>
 
-
-  <link name="right_front_wheel_link">
-
+  <link name="front_right_wheel_link">
     <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
       <material name="wheel_mat"/>
-
     </visual>
-
     <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
     </collision>
-
     <inertial>
-
       <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
     </inertial>
-
   </link>
 
-
-  <!-- RIGHT BOGIE -->
-
-  <joint name="right_bogie_joint" type="revolute">
-
-    <parent link="right_rocker_link"/>
-    <child link="right_bogie_link"/>
-
-    <origin
-      xyz="-0.25 0 0"
-      rpy="0 0 0"/>
-
-    <axis xyz="0 1 0"/>
-
-    <limit
-      lower="-0.785"
-      upper="0.785"
-      effort="1000"
-      velocity="1.0"/>
-
-    <dynamics
-      damping="5.0"
-      friction="1.0"/>
-
-  </joint>
-
-
-  <link name="right_bogie_link">
-
-    <visual>
-
-      <origin xyz="-0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-      <material name="arm_mat"/>
-
-    </visual>
-
-    <collision>
-
-      <origin xyz="-0.25 0 0"/>
-
-      <geometry>
-        <box size="0.50 0.08 0.08"/>
-      </geometry>
-
-    </collision>
-
-  </link>
-
-
-  <!-- RIGHT MIDDLE WHEEL -->
-
-  <joint name="right_middle_wheel_joint" type="continuous">
-
-    <parent link="right_bogie_link"/>
-    <child link="right_middle_wheel_link"/>
-
-    <origin
-      xyz="0.25 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
+  <!-- Rear-left wheel -->
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel_link"/>
+    <origin xyz="-0.25 0.30 0.15" rpy="1.57079632679 0 0"/>
     <axis xyz="0 0 1"/>
-
   </joint>
 
-
-  <link name="right_middle_wheel_link">
-
+  <link name="rear_left_wheel_link">
     <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
       <material name="wheel_mat"/>
-
     </visual>
-
     <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
     </collision>
-
     <inertial>
-
       <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
     </inertial>
-
   </link>
 
-
-  <!-- RIGHT REAR WHEEL -->
-
-  <joint name="right_rear_wheel_joint" type="continuous">
-
-    <parent link="right_bogie_link"/>
-    <child link="right_rear_wheel_link"/>
-
-    <origin
-      xyz="-0.25 0 -0.15"
-      rpy="1.57079632679 0 0"/>
-
+  <!-- Rear-right wheel -->
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel_link"/>
+    <origin xyz="-0.25 -0.30 0.15" rpy="1.57079632679 0 0"/>
     <axis xyz="0 0 1"/>
-
   </joint>
 
-
-  <link name="right_rear_wheel_link">
-
+  <link name="rear_right_wheel_link">
     <visual>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
       <material name="wheel_mat"/>
-
     </visual>
-
     <collision>
-
-      <geometry>
-        <cylinder
-          radius="0.15"
-          length="0.08"/>
-      </geometry>
-
+      <geometry><cylinder radius="0.15" length="0.08"/></geometry>
     </collision>
-
     <inertial>
-
       <mass value="3.0"/>
-
-      <inertia
-        ixx="0.03"
-        ixy="0"
-        ixz="0"
-        iyy="0.03"
-        iyz="0"
-        izz="0.03"/>
-
+      <inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03"/>
     </inertial>
-
   </link>
 
   <!-- ====================================================== -->

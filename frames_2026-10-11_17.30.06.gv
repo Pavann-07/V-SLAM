@@ -1,0 +1,17 @@
+digraph G {
+"zed_camera_center" -> "zed_left_camera_frame"[label=" Broadcaster: default_authority\nAverage rate: 59.796\nBuffer length: 5.0\nMost recent transform: 1791720006.713482\nOldest transform: 1791720001.71314\n"];
+"zed_camera_link" -> "zed_camera_center"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "zed_camera_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"zed_left_camera_frame" -> "zed_left_camera_frame_optical"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"zed_camera_center" -> "zed_right_camera_frame"[label=" Broadcaster: default_authority\nAverage rate: 59.796\nBuffer length: 5.017\nMost recent transform: 1791720006.713482\nOldest transform: 1791720001.696389\n"];
+"zed_right_camera_frame" -> "zed_right_camera_frame_optical"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_footprint" -> "base_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "left_front_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.204\nBuffer length: 4.9\nMost recent transform: 1791720006.680086\nOldest transform: 1791720001.780229\n"];
+"base_link" -> "left_rear_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.204\nBuffer length: 4.9\nMost recent transform: 1791720006.680086\nOldest transform: 1791720001.780229\n"];
+"base_link" -> "right_front_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.204\nBuffer length: 4.9\nMost recent transform: 1791720006.680086\nOldest transform: 1791720001.780229\n"];
+"base_link" -> "right_rear_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 10.204\nBuffer length: 4.9\nMost recent transform: 1791720006.680086\nOldest transform: 1791720001.780229\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1791720006.7402966"[ shape=plaintext ] ;
+}->"base_footprint";
+}
